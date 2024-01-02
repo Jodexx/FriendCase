@@ -1,17 +1,18 @@
 package com.jodexindustries.friendcase;
 
+import com.jodexindustries.donatecase.api.SubCommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FriendCase extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
 
+        SubCommandManager.registerSubCommand("gift", new FriendSubCommand());
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        SubCommandManager.unregisterSubCommand("gift");
     }
 }
