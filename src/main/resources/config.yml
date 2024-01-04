@@ -1,7 +1,12 @@
+# Placeholders
+# %sender%
+# %target%
+# %keys%
+# %case%
 Messages:
   NumberFormat: "&cNumber format exception"
   YouReceivedGift: "&aYou successfully received gift from player &e%sender%"
-  YouSendGift: "&aYou successfully send gift for player &e%player%"
+  YouSendGift: "&aYou successfully send gift for player &e%target%"
   GiftYourself: "&cYou can't send gift for yourself"
   PlayerNotFound: "&cPlayer not online"
   MinNumber: "&cNumber of your keys less than 1"

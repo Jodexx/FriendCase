@@ -6,12 +6,14 @@ import com.jodexindustries.donatecase.api.SubCommandType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class FriendSubCommand implements SubCommand {
     @Override
@@ -43,15 +45,25 @@ public class FriendSubCommand implements SubCommand {
                         return;
                     }
                     if(Case.hasCaseByName(caseType)) {
-                        if(Case.getKeys(caseType, p.getName()) < 1) {
+                        if(Case.getKeys(caseType, p.getName()) >= 1) {
                             if(target != null) {
                                 if(target != p) {
                                     Case.removeKeys(caseType, p.getName(), keys);
                                     Case.addKeys(caseType, target.getName(), keys);
-                                    target.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.YouReceivedGift")
-                                            .replace("%sender%", sender.getName())));
-                                    sender.sendMessage(rc(rc(FriendCase.instance.getConfig().getString("Messages.YouSendGift"))
-                                            .replace("%target%", target.getName())));
+                                    target.sendMessage(rc(
+                                            FriendCase.instance.getConfig().getString("Messages.YouReceivedGift")
+                                                    .replace("%sender%", sender.getName())
+                                                    .replace("%target%", target.getName())
+                                                    .replace("%keys%", keys + "")
+                                                    .replace("%case%", caseType)
+                                    ));
+                                    sender.sendMessage(rc(
+                                            FriendCase.instance.getConfig().getString("Messages.YouSendGift")
+                                                    .replace("%target%", target.getName())
+                                                    .replace("%sender%", sender.getName())
+                                                    .replace("%keys%", keys + "")
+                                                    .replace("%case%", caseType)
+                                    ));
                                 } else {
                                     sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.GiftYourself")));
                                 }
@@ -100,7 +112,17 @@ public class FriendSubCommand implements SubCommand {
 
     @Override
     public List<String> getTabCompletions(CommandSender sender, String[] args) {
-        return null;
+        List<String> strings;
+        if(args.length == 1) {
+            strings = Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toList());
+            return strings;
+        } else {
+            if(args.length == 2) {
+                strings = new ArrayList<>(Case.getCases().keySet());
+                return strings;
+            }
+        }
+        return new ArrayList<>();
     }
 
     @Override

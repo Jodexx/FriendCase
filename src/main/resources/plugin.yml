@@ -1,6 +1,5 @@
 name: FriendCase
 version: '${version}'
 main: com.jodexindustries.friendcase.FriendCase
-api-version: '1.20'
 depend:
   - DonateCase
