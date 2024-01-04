@@ -3,13 +3,14 @@
 # %target%
 # %keys%
 # %case%
+# %required%
 Messages:
   NumberFormat: "&cNumber format exception"
   YouReceivedGift: "&aYou successfully received gift from player &e%sender%"
   YouSendGift: "&aYou successfully send gift for player &e%target%"
   GiftYourself: "&cYou can't send gift for yourself"
   PlayerNotFound: "&cPlayer not online"
-  MinNumber: "&cNumber of your keys less than 1"
+  MinNumber: "&cRequires at least %required% of case keys"
   CaseNotFound: "&cCase not found!"
   ConfigReloaded: "&aConfig reloaded!"
   OnlyPlayers: "&cYou can use this command only from player!"

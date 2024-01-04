@@ -45,7 +45,7 @@ public class FriendSubCommand implements SubCommand {
                         return;
                     }
                     if(Case.hasCaseByName(caseType)) {
-                        if(Case.getKeys(caseType, p.getName()) >= 1) {
+                        if(Case.getKeys(caseType, p.getName()) >= 1 && Case.getKeys(caseType, p.getName()) >= keys) {
                             if(target != null) {
                                 if(target != p) {
                                     Case.removeKeys(caseType, p.getName(), keys);
@@ -71,7 +71,9 @@ public class FriendSubCommand implements SubCommand {
                                 sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.PlayerNotFound")));
                             }
                         } else {
-                            sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.MinNumber")));
+                            sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.MinNumber")
+                                    .replace("%required%", keys + "")
+                            ));
                         }
                     } else {
                         sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.CaseNotFound")));
