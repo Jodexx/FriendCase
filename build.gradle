@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.jodexindustries.donatecase:DonateCaseAPI:1.2.0")
+    compileOnly("com.jodexindustries.donatecase:DonateCaseAPI:1.2.4")
 
 
     compileOnly "org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT"
