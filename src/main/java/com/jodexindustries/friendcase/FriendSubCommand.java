@@ -1,8 +1,8 @@
 package com.jodexindustries.friendcase;
 
 import com.jodexindustries.donatecase.api.Case;
-import com.jodexindustries.donatecase.api.SubCommand;
-import com.jodexindustries.donatecase.api.SubCommandType;
+import com.jodexindustries.donatecase.api.data.SubCommand;
+import com.jodexindustries.donatecase.api.data.SubCommandType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
