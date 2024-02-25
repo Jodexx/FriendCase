@@ -44,7 +44,7 @@ public class FriendSubCommand implements SubCommand {
                         sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.NumberFormat")));
                         return;
                     }
-                    if(Case.hasCaseByName(caseType)) {
+                    if(Case.hasCase(caseType)) {
                         if(Case.getKeys(caseType, p.getName()) >= 1 && Case.getKeys(caseType, p.getName()) >= keys) {
                             if(target != null) {
                                 if(target != p) {
@@ -100,7 +100,7 @@ public class FriendSubCommand implements SubCommand {
     public static final char COLOR_CHAR = ChatColor.COLOR_CHAR;
     public static String translateHexColorCodes(String message) {
         Matcher matcher = HEX_PATTERN.matcher(message);
-        StringBuffer buffer = new StringBuffer(message.length() + 4 * 8);
+        StringBuilder buffer = new StringBuilder(message.length() + 4 * 8);
         while (matcher.find()) {
             String group = matcher.group(1);
             matcher.appendReplacement(buffer, COLOR_CHAR + "x"
