@@ -3,6 +3,8 @@ package com.jodexindustries.friendcase;
 import com.jodexindustries.donatecase.api.Case;
 import com.jodexindustries.donatecase.api.data.SubCommand;
 import com.jodexindustries.donatecase.api.data.SubCommandType;
+import com.jodexindustries.friendcase.bootstrap.FriendCase;
+import com.jodexindustries.friendcase.bootstrap.FriendCasePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -16,6 +18,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class FriendSubCommand implements SubCommand {
+    private FriendCase plugin;
+    public FriendSubCommand(FriendCase plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(sender instanceof Player) {
@@ -27,8 +33,8 @@ public class FriendSubCommand implements SubCommand {
                     if(args.length == 1) {
                         if (args[0].equalsIgnoreCase("reload")) {
                             if (sender.hasPermission("donatecase.admin")) {
-                                FriendCase.instance.reloadConfig();
-                                sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.ConfigReloaded")));
+                                plugin.getAddonConfig().setup();
+                                sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.ConfigReloaded")));
                             }
                         } else {
                             sendHelp(sender);
@@ -41,51 +47,51 @@ public class FriendSubCommand implements SubCommand {
                     try {
                         keys = Math.abs(Integer.parseInt(args[2]));
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.NumberFormat")));
+                                sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.NumberFormat")));
                         return;
                     }
-                    if(Case.hasCase(caseType)) {
+                    if(Case.hasCaseByType(caseType)) {
                         if(Case.getKeys(caseType, p.getName()) >= 1 && Case.getKeys(caseType, p.getName()) >= keys) {
                             if(target != null) {
                                 if(target != p) {
                                     Case.removeKeys(caseType, p.getName(), keys);
                                     Case.addKeys(caseType, target.getName(), keys);
                                     target.sendMessage(rc(
-                                            FriendCase.instance.getConfig().getString("Messages.YouReceivedGift")
+                                            plugin.getAddonConfig().getConfig().getString("Messages.YouReceivedGift")
                                                     .replace("%sender%", sender.getName())
                                                     .replace("%target%", target.getName())
                                                     .replace("%keys%", keys + "")
                                                     .replace("%case%", caseType)
                                     ));
                                     sender.sendMessage(rc(
-                                            FriendCase.instance.getConfig().getString("Messages.YouSendGift")
+                                            plugin.getAddonConfig().getConfig().getString("Messages.YouSendGift")
                                                     .replace("%target%", target.getName())
                                                     .replace("%sender%", sender.getName())
                                                     .replace("%keys%", keys + "")
                                                     .replace("%case%", caseType)
                                     ));
                                 } else {
-                                    sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.GiftYourself")));
+                                    sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.GiftYourself")));
                                 }
                             } else {
-                                sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.PlayerNotFound")));
+                                sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.PlayerNotFound")));
                             }
                         } else {
-                            sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.MinNumber")
+                            sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.MinNumber")
                                     .replace("%required%", keys + "")
                             ));
                         }
                     } else {
-                        sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.CaseNotFound")));
+                        sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.CaseNotFound")));
                     }
                 }
             }
         } else {
-            sender.sendMessage(rc(FriendCase.instance.getConfig().getString("Messages.OnlyPlayers")));
+            sender.sendMessage(rc(plugin.getAddonConfig().getConfig().getString("Messages.OnlyPlayers")));
         }
     }
     private void sendHelp(CommandSender sender) {
-        for (String msg : FriendCase.instance.getConfig().getStringList("Messages.Help")) {
+        for (String msg : plugin.getAddonConfig().getConfig().getStringList("Messages.Help")) {
             sender.sendMessage(rc(msg));
         }
     }
@@ -136,7 +142,7 @@ public class FriendSubCommand implements SubCommand {
     public String[] getArgs() {
         List<String> argsList = new ArrayList<>();
 
-        for (String args : FriendCase.instance.getConfig().getStringList("Api.Args")) {
+        for (String args : plugin.getAddonConfig().getConfig().getStringList("Api.Args")) {
             argsList.add(rc(args));
         }
 
@@ -145,6 +151,6 @@ public class FriendSubCommand implements SubCommand {
 
     @Override
     public String getDescription() {
-        return rc(FriendCase.instance.getConfig().getString("Api.Description"));
+        return rc(plugin.getAddonConfig().getConfig().getString("Api.Description"));
     }
 }
