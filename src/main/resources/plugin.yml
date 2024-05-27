@@ -1,5 +1,5 @@
 name: FriendCase
 version: '${version}'
-main: com.jodexindustries.friendcase.FriendCase
+main: com.jodexindustries.friendcase.bootstrap.FriendCasePlugin
 depend:
   - DonateCase
