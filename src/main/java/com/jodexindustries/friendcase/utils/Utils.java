@@ -8,8 +8,8 @@ import java.io.File;
 public class Utils {
     public static CustomConfig load(FriendCase plugin) {
         CustomConfig config = new CustomConfig(plugin.getDataFolder());
-        if (!(new File(plugin.getDataFolder(), "Config.yml")).exists()) {
-            plugin.saveResource("Config.yml", false);
+        if (!(new File(plugin.getDataFolder(), "config.yml")).exists()) {
+            plugin.saveResource("config.yml", false);
         }
         config.setup();
         plugin.getAPI().getSubCommandManager().registerSubCommand("gift", new FriendSubCommand(plugin));

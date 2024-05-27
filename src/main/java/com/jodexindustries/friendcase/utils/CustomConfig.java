@@ -11,12 +11,12 @@ public class CustomConfig {
     private final File dataFolder;
 
     public CustomConfig(File dataFolder) {
-        this.configFile = new File(dataFolder, "Config.yml");
+        this.configFile = new File(dataFolder, "config.yml");
         this.config = YamlConfiguration.loadConfiguration(configFile);
         this.dataFolder = dataFolder;
     }
     public void setup() {
-        configFile = new File(dataFolder, "Config.yml");
+        configFile = new File(dataFolder, "config.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
     }
     public FileConfiguration getConfig() {
