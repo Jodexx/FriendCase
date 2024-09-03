@@ -35,7 +35,7 @@ public class Tools {
                 .tabCompleter(friendSubCommand)
                 .executor(friendSubCommand)
                 .args(args)
-                .type(SubCommandType.PLAYER)
+                .permission(SubCommandType.PLAYER.permission)
                 .description(rc(getConfig().getConfig().getString("Api.Description")))
                 .build();
 
